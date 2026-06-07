@@ -1,0 +1,6 @@
+# Artifacts created by `npx skills add` / `ags install` when run inside this repo.
+# The skill is the repo root (SKILL.md); these are local install copies, not source.
+.agents/
+.claude/
+.cursor/
+skills-lock.json

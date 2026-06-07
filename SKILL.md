@@ -1,6 +1,6 @@
 ---
 name: peek
-description: Delegate whole-system, cross-file, and architecture questions about a codebase to peek's hosted comprehension engine over MCP (the ask_repo tool), instead of reconstructing the structure yourself with grep/read. Use when the user asks how something flows across files or services, what depends on what, where a feature or behavior lives, how a subsystem works end to end, or wants to get oriented in an unfamiliar or large repository.
+description: Delegate whole-system, cross-file, and cross-repo architecture questions to peek's hosted comprehension engine over MCP (the ask_repo tool), instead of reconstructing the structure yourself with grep/read. Use when the user asks how something flows across files, services, or repositories, what depends on what, where a feature or behavior lives, how a subsystem works end to end, or wants to get oriented in an unfamiliar or large codebase.
 user-invocable: true
 allowed-tools:
   - mcp__peek__list_repos
@@ -54,7 +54,11 @@ Stay local for work that doesn't need a whole-system view:
    appears with `status: "ready"`. If it's missing, tell the user to index it at
    https://codepeekr.dev — peek only answers for indexed repos.
 2. **Ask a whole-system question.** Call `ask_repo` with:
-   - `repo`: `"owner/repo"`, exactly as it appears in `list_repos`.
+   - `repos`: an array of `"owner/repo"` strings, exactly as they appear in
+     `list_repos`. Pass **multiple related repos** to ask a cross-repo /
+     cross-service question — peek reasons over all of them together, e.g.
+     `["acme/api", "acme/worker"]` for "how does a job get from the API to the
+     worker?". A single-repo question is just a one-element array.
    - `question`: a natural-language question. Phrase it as the real
      cross-system question — name the flow or concern ("…across services",
      "…end to end") instead of asking for one file.
