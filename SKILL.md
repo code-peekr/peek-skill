@@ -1,6 +1,6 @@
 ---
 name: peek
-description: Delegate whole-system, cross-file, and cross-repo architecture questions to peek's hosted comprehension engine over MCP (the ask_repo tool), instead of reconstructing the structure yourself with grep/read. Use when the user asks how something flows across files, services, or repositories, what depends on what, where a feature or behavior lives, how a subsystem works end to end, or wants to get oriented in an unfamiliar or large codebase.
+description: Use whenever the user wants to understand how a codebase fits together rather than look up a single line — e.g. "how does X work", "understand the architecture", "how is the indexer organized/architected", "how does a request flow from A to B end to end", "where is feature Y implemented", "what depends on this", "trace what happens when a user signs in", or getting oriented in an unfamiliar or large repo before editing. Routes these whole-system, cross-file, and cross-repo architecture and comprehension questions to peek's hosted research engine over MCP (the ask_repo tool) instead of reconstructing the structure yourself with grep and read.
 user-invocable: true
 allowed-tools:
   - mcp__peek__list_repos
