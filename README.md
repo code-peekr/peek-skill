@@ -1,5 +1,7 @@
 # peek — agent skill
 
+[![skills.sh](https://www.skills.sh/b/code-peekr/peek-skill)](https://www.skills.sh/code-peekr/peek-skill)
+
 **Whole-system codebase comprehension for your AI coding agent.**
 
 [peek](https://codepeekr.dev) keeps a deep, hierarchical map of your
