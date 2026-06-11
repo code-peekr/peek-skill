@@ -5,9 +5,14 @@
 **Whole-system codebase comprehension for your AI coding agent.**
 
 [peek](https://codepeekr.dev) keeps a deep, hierarchical map of your
-repositories and answers whole-system questions over MCP. This skill teaches
-your agent *when* to ask peek — cross-file flows, architecture, "how does X work
-end to end" — instead of grepping around to rebuild the structure itself.
+repositories. This skill teaches your agent *when and how* to read that map —
+cross-file flows, architecture, "how does X work end to end", "where does Y
+live" — instead of grepping around to rebuild the structure itself.
+
+It reads the map **local-first**: if you've run `peek sync` in a repo, the map
+lives on disk under `.peek/` and the agent reads it instantly and for free;
+otherwise (or for cross-cutting / cross-repo questions) it escalates to peek's
+hosted research engine over MCP (`ask_repo`).
 
 Works across **Claude Code, Cursor, Codex, GitHub Copilot, Windsurf, Gemini**,
 and other skill-aware agents. One `SKILL.md`, every platform.
@@ -32,18 +37,34 @@ Or install manually by cloning into your agent's skills directory:
 git clone https://github.com/code-peekr/peek-skill ~/.claude/skills/peek
 ```
 
-## Prerequisite: connect the peek MCP server
+## Setup
 
-The skill calls peek's two MCP tools (`list_repos`, `ask_repo`). Connect the
-server once, named `peek`:
+### Local overlay (recommended — instant, free)
+
+Install the [peek CLI](https://codepeekr.dev/docs), then sync an indexed repo so
+its map lands on disk:
+
+```bash
+peek login          # authorize in the browser
+peek sync           # writes .peek/ into the current repo (git-invisible)
+```
+
+Re-run `peek sync` to refresh after a reindex. The overlay is added to
+`.git/info/exclude`, so it never appears in `git status`.
+
+### Hosted engine (`ask_repo` / `list_repos` over MCP)
+
+For repos without a local overlay, and for cross-cutting / cross-repo questions,
+the skill calls peek's MCP tools. Connect the server once, named `peek`:
 
 ```bash
 claude mcp add --transport http peek https://codepeekr.dev/api/mcp \
-  --header "Authorization: Bearer <YOUR_PEEK_MCP_TOKEN>"
+  --header "Authorization: Bearer <YOUR_PEEK_TOKEN>"
 ```
 
-Mint a token at **https://codepeekr.dev → Settings → MCP**. Other agents: add
-the same Streamable-HTTP MCP endpoint with the bearer header.
+Mint a token at **https://codepeekr.dev → Settings → API tokens** (the same
+token the CLI uses). Other agents: add the same Streamable-HTTP MCP endpoint
+with the bearer header.
 
 ## What peek is good at
 
